@@ -18,7 +18,7 @@ const createDummyData = (tickers) => {
     let randKey;
     
     return tickers.map(tick => {
-        randKey = stockTickerToName[tickerKeys[randNumInRange(tickerKeys.length)]];
+        randKey = tickerKeys[randNumInRange(tickerKeys.length)];
         return {
             "name": stockTickerToName[randKey],
             "ticker": randKey.toUpperCase(),
