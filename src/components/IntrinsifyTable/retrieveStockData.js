@@ -16,11 +16,9 @@ const createDummyData = (tickers) => {
     };
     const tickerKeys = Object.keys(stockTickerToName);
     let randKey;
-
-    let mapped = tickers.forEach(tick => {
-        debugger;
+    
+    return tickers.map(tick => {
         randKey = stockTickerToName[tickerKeys[randNumInRange(tickerKeys.length)]];
-        console.log(randKey);
         return {
             "name": stockTickerToName[randKey],
             "ticker": randKey.toUpperCase(),
@@ -28,14 +26,10 @@ const createDummyData = (tickers) => {
             "flatEstimateGrowth": 5,
             "aaaCorpBondYield": 3.56,
             "eps": randNumInRange(10),
-            "iv": Math.random(),
-            "niv": Math.random()
+            "iv": Math.random().toFixed(2),
+            "niv": Math.random().toFixed(2)
         }
     });
-
-    console.log(mapped);
-
-    return mapped;
 }
 
 export const retrieveStockData = (tickers) => {
