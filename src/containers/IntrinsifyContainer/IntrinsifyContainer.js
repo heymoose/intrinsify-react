@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 
 class IntrinsifyContainer extends Component {
     render() {
         return (
-            <div>Some Intrinsify stuff yall</div>
+            <>
+                <p>The text input box to input tickers</p>
+                <p>The submit button</p>
+                <IntrinsifyTable />
+            </>
         );
     }
 }
