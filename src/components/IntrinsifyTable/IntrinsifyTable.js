@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { retrieveStockData } from './retrieveStockData';
+import { retrieveStockData } from './intrinsifyTableLogic';
 import ReactTable from 'react-table';
 import style from 'react-table/react-table.css'
+
+// TODO: Can add column generation to retrieveStockData.js and make more generic as well
 
 class IntrinsifyTable extends Component {
     render () {
