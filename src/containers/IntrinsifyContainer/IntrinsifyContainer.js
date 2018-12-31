@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../../components/Header/Header';
+import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTextInput';
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 
 class IntrinsifyContainer extends Component {
@@ -7,7 +8,13 @@ class IntrinsifyContainer extends Component {
         return (
             <>
                 <Header />
-                <p>The text input box to input tickers</p>
+                <TickerTextInput 
+                    id={'tickerInput'} 
+                    type={'text'}
+                    label='Tickers'
+                    value='Tickers'
+                    focussed={true}
+                    locked={false} />
                 <p>The submit button</p>
                 <IntrinsifyTable />
             </>
