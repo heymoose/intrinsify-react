@@ -1,7 +1,8 @@
 import React from 'react';
 import { generateDummyStockData, generateColumns } from './intrinsifyTableLogic';
 import ReactTable from 'react-table';
-import style from 'react-table/react-table.css'
+import reactTableStyle from 'react-table/react-table.css'
+import style from './IntrinsifyTable.module.css';
 
 const intrinsifyTable = () => {
     const data = generateDummyStockData(15);
@@ -9,7 +10,7 @@ const intrinsifyTable = () => {
 
     return (
         <ReactTable
-            className={style.ReactTable}
+            className={[reactTableStyle.ReactTable, style.IntrinsifyTable].join(' ')}
             data={data}
             columns={columns} />
     );
