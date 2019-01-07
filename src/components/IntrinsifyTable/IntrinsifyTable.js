@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateDummyStockData, generateColumns } from './intrinsifyTableLogic';
+import { generateDummyStockData, generateColumns, mapIndicatorValue } from './intrinsifyTableLogic';
 import ReactTable from 'react-table';
 import reactTableStyle from 'react-table/react-table.css'
 import style from './IntrinsifyTable.module.css';
@@ -7,6 +7,29 @@ import style from './IntrinsifyTable.module.css';
 const intrinsifyTable = () => {
     const data = generateDummyStockData(15);
     const columns = generateColumns();
+    const rivIndicatorColumn = columns.find(function(c) {
+        return c.accessor === 'rivIndicator' 
+    });
+
+    rivIndicatorColumn.Cell = row => (
+        <div
+            style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#dadada',
+            borderRadius: '2px'
+            }}>
+            <div
+                style={{
+                    width: `${row.value}%`,
+                    height: '100%',
+                    backgroundColor: mapIndicatorValue(row.value),
+                    borderRadius: '2px',
+                    transition: 'all .2s ease-out'
+                }}
+            />
+        </div>
+    );
 
     return (
         <ReactTable
