@@ -19,7 +19,7 @@ const styles = theme => ({
   },
 });
 
-const tickerTextInput = () => (
+const tickerTextInput = (props) => (
     <form>
         <TextField
             id="outlined-full-width"
@@ -30,6 +30,7 @@ const tickerTextInput = () => (
             fullWidth
             margin="normal"
             variant="outlined"
+            onChange={props.change}
             InputLabelProps={{
                 shrink: true,
             }} />

@@ -1,17 +1,46 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTextInput';
-import MaterialButton from '../../components/UI/MaterialButton/MaterialButton'
+import Submit from '../../components/Controls/Submit/Submit';
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
+
+// Data provided for free by IEX
+// See terms of use here: https://iextrading.com/api-exhibit-a/
 
 class IntrinsifyContainer extends Component {
     state = {
-        tickers: ''
+        tickers: '',
+        stockData: []
     }
 
     onTickerTextInputChange = (event) => {
-        const updatedTickers = event.target.value;
+        const updatedTickers = event.target.value
+            .trim()
+            .split(',')
+            .filter(Boolean);
+
         this.setState({ tickers: updatedTickers });
+    }
+
+    submitHandler = () => {
+        const baseEndpoint = 'https://api.iextrading.com/1.0/';
+        const query = `/stock/market/batch?symbols=${this.state.tickers.join(",")}&types=quote,stats`;
+
+        axios.get(baseEndpoint + query)
+            .then(response => {
+                const updatedStockData = Object.keys(response.data)
+                    .map(tick => {
+                        return {
+                            ticker: tick,
+                            price: response.data[tick].quote.latestPrice,
+                            eps: response.data[tick].stats.latestEPS,
+                            name: response.data[tick].stats.companyName
+                        }
+                    });
+
+                this.setState({stockData: updatedStockData});
+            });
     }
 
     render() {
@@ -24,13 +53,15 @@ class IntrinsifyContainer extends Component {
                     label='Tickers'
                     value='Tickers'
                     focussed={true}
-                    locked={false} />
-                <MaterialButton
-                    variant='contained'
-                    color='primary'
-                    text='Calculate' />
+                    locked={false}
+                    change={this.onTickerTextInputChange} />
+                <Submit
+                    btnVariant='contained'
+                    btnColor='primary'
+                    btnText='Calculate'
+                    btnClick={this.submitHandler} />
                 <IntrinsifyTable
-                    dummyData />
+                    stockData={this.state.stockData} />
             </>
         );
     }

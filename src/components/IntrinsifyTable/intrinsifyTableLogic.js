@@ -128,3 +128,22 @@ export const generateColumns = () => {
             };
         });
 }
+
+export const generateTableData = (stockData) => {
+    return stockData.map(stock => {
+        const iv = (stock.eps * (8.5 + (2 * flatGrowthEstimate)) * 4.4) / aaaCorpBondYield;
+        const riv = iv / stock.price;
+
+        return {
+            'name': stock.name,
+            'ticker': stock.ticker,
+            'price': '$' + stock.price,
+            'flatGrowthEstimate': flatGrowthEstimate,
+            'aaaCorpBondYield': aaaCorpBondYield,
+            'eps': '$' + stock.eps,
+            'iv': '$' + iv.toFixed(2),
+            'riv': riv.toFixed(2),
+            'rivIndicator': riv
+        }
+    });
+}

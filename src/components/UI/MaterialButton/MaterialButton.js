@@ -14,7 +14,7 @@ const styles = theme => ({
 function MaterialButton(props) {
   return (
     <div>
-      <Button variant={props.variant} color={props.color}>
+      <Button variant={props.variant} color={props.color} onClick={props.click}>
         {props.text}
       </Button>
     </div>
