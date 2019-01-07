@@ -1,3 +1,6 @@
+import React from 'react';
+import { findColorRatioBetweenTwoColors } from '../../jsUtils/colorUtils';
+import { randIntegerInRange, randFloatInRange, scale } from '../../jsUtils/numberUtils';
 
 const flatGrowthEstimate = 5;
 const aaaCorpBondYield = 3.56;
@@ -24,59 +27,6 @@ const columnsAccessorToName = {
     'riv': 'RIV',
     'rivIndicator': 'Attractiveness'
 };
-
-const randIntegerInRange = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.ceil(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const randFloatInRange = (min, max, numDec) => {
-    const num = Math.random() * (max - min + 1) + min; 
-    return num.toFixed(numDec);
-}
-
-export const scale = (num, in_min, in_max, out_min, out_max) => {
-    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-export const rgbToHex = (r, g, b) => {
-    return ((1 << 24) + (r << 16) + (g << 8) +b).toString(16).slice(1);
-}
-
-// Source for color mapping code:
-// https://stackoverflow.com/questions/16360533/calculate-color-hex-having-2-colors-and-percent-position
-
-const getComponentFromHexColorCode = (color, component) => {
-    if (component === 'r') {
-        return color.substring(0, 2);
-    }
-    else if (component === 'g') {
-        return color.substring(2, 4);
-    }
-    else if (component === 'b') {
-        return color.substring(4, 6);
-    }
-    
-    return color;
-}
-
-const findColorComponentRatioBetweenTwoColors = (comp1, comp2, ratio) => {
-    return Math.ceil(parseInt(comp1, 16) * ratio + parseInt(comp2, 16) * (1 - ratio));
-}
-
-const findColorRatioBetweenTwoColors = (color1, color2, ratio) => {
-    const rComponentColor1 = getComponentFromHexColorCode(color1, 'r');
-    const rComponentColor2 = getComponentFromHexColorCode(color2, 'r');
-    const gComponentColor1 = getComponentFromHexColorCode(color1, 'g');
-    const gComponentColor2 = getComponentFromHexColorCode(color2, 'g');
-    const bComponentColor1 = getComponentFromHexColorCode(color1, 'b');
-    const bComponentColor2 = getComponentFromHexColorCode(color2, 'b');
-    const r = findColorComponentRatioBetweenTwoColors(rComponentColor1, rComponentColor2, ratio);
-    const g = findColorComponentRatioBetweenTwoColors(gComponentColor1, gComponentColor2, ratio);
-    const b = findColorComponentRatioBetweenTwoColors(bComponentColor1, bComponentColor2, ratio);
-    return rgbToHex(r, g, b);
-}
 
 const createDummyData = (num) => {
     const tickerKeys = Object.keys(dummyStockNames);
@@ -105,21 +55,7 @@ const createDummyData = (num) => {
         });
 }
 
-export const generateDummyStockData = (numDummyData) => {
-    return createDummyData(numDummyData);
-}
-
-export const generateColumns = () => {
-    return Object.keys(columnsAccessorToName)
-        .map(acc => {
-            return { 
-                Header: columnsAccessorToName[acc],
-                accessor: acc
-             };
-        });
-}
-
-export const mapIndicatorValue = (value) => {
+const mapIndicatorValue = (value) => {
     const greenLowerBound = 'ccffe5';
     const greenUpperBound = '00994c';
     const redLowerBound = 'ffcccc';
@@ -140,7 +76,7 @@ export const mapIndicatorValue = (value) => {
     return '#' + hex;
 }
 
-export const mapIndicatorWidth = (value) => {
+const mapIndicatorWidth = (value) => {
     const constrainedValue = Math.min(Math.max(parseFloat(value), 0), 3); // lock value between 0 and 3
     let width = 25;
 
@@ -150,6 +86,45 @@ export const mapIndicatorWidth = (value) => {
     else if (constrainedValue > 1 && constrainedValue <= 3.0) {
         width = scale(constrainedValue, 1, 3, 15, 100);
     }
-    
+
     return width + '%';
+}
+
+export const generateDummyStockData = (numDummyData) => {
+    return createDummyData(numDummyData);
+}
+
+export const generateColumns = () => {
+    return Object.keys(columnsAccessorToName)
+        .map(acc => {
+            if (acc === 'rivIndicator') {
+                return {
+                    Header: columnsAccessorToName[acc],
+                    accessor: acc,
+                    Cell: row => (
+                        <div
+                            style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#dadada',
+                            borderRadius: '2px'
+                            }}>
+                            <div
+                                style={{
+                                    width: mapIndicatorWidth(row.value),
+                                    height: '100%',
+                                    backgroundColor: mapIndicatorValue(row.value),
+                                    borderRadius: '2px',
+                                    transition: 'all .2s ease-out'
+                                }}
+                            />
+                        </div>
+                    )
+                }
+            }
+            return { 
+                Header: columnsAccessorToName[acc],
+                accessor: acc
+            };
+        });
 }
