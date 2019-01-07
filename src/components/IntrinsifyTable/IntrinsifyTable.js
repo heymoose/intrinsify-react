@@ -1,11 +1,11 @@
 import React from 'react';
-import { generateDummyStockData, generateColumns, mapIndicatorValue } from './intrinsifyTableLogic';
+import { generateDummyStockData, generateColumns, mapIndicatorValue, mapIndicatorWidth} from './intrinsifyTableLogic';
 import ReactTable from 'react-table';
 import reactTableStyle from 'react-table/react-table.css'
 import style from './IntrinsifyTable.module.css';
 
 const intrinsifyTable = () => {
-    const data = generateDummyStockData(15);
+    const data = generateDummyStockData(25);
     const columns = generateColumns();
     const rivIndicatorColumn = columns.find(function(c) {
         return c.accessor === 'rivIndicator' 
@@ -21,7 +21,7 @@ const intrinsifyTable = () => {
             }}>
             <div
                 style={{
-                    width: `${row.value}%`,
+                    width: mapIndicatorWidth(row.value),
                     height: '100%',
                     backgroundColor: mapIndicatorValue(row.value),
                     borderRadius: '2px',
@@ -30,6 +30,8 @@ const intrinsifyTable = () => {
             />
         </div>
     );
+
+    //debugger;
 
     return (
         <ReactTable

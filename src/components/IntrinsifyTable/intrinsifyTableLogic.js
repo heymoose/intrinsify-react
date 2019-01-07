@@ -36,18 +36,12 @@ const randFloatInRange = (min, max, numDec) => {
     return num.toFixed(numDec);
 }
 
-const scale = (num, in_min, in_max, out_min, out_max) => {
+export const scale = (num, in_min, in_max, out_min, out_max) => {
     return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-const rgbToHex = (rgb) => {
-    let hex = Number(rgb).toString(16);
-
-    if (hex.length < 2) {
-        hex = '0' + hex;
-    }
-
-    return hex;
+export const rgbToHex = (r, g, b) => {
+    return ((1 << 24) + (r << 16) + (g << 8) +b).toString(16).slice(1);
 }
 
 const createDummyData = (num) => {
@@ -92,6 +86,10 @@ export const generateColumns = () => {
 }
 
 export const mapIndicatorValue = (value) => {
+    // This is finally working, but a better solution for sliding the color from light to dark
+    // red or green is probably this:
+    // https://stackoverflow.com/questions/16360533/calculate-color-hex-having-2-colors-and-percent-position
+
     const constrainedValue = Math.min(Math.max(parseFloat(value), 0), 3); // lock value between 0 and 3
     let r = 0;
     let g = 0;
@@ -102,11 +100,17 @@ export const mapIndicatorValue = (value) => {
         g = Math.abs(scale(constrainedValue, 0, 3, 0, 204) - 204);
         b = g;
     }
+    else if (constrainedValue > 1 && constrainedValue <= 3) {
+        r = Math.abs(scale(constrainedValue, 0, 3, 0, 192) - 192);
+        g = 255;
+        b = Math.abs(scale(constrainedValue, 0, 3, 51, 209) - 158);
+    }
+    
+    return '#' + rgbToHex(parseInt(r), parseInt(g), parseInt(b));
+}
 
-    // map green values
-    // convert rgb to hex
-
-    return value > 66 ? '#85cc00'
-        : value > 33 ? '#ffbf00'
-        : '#ff2e00'
+export const mapIndicatorWidth = (value) => {
+    const constrainedValue = Math.min(Math.max(parseFloat(value), 0), 3); // lock value between 0 and 3
+    const width = scale(constrainedValue, 0, 3, 25, 100);
+    return width + '%';
 }
