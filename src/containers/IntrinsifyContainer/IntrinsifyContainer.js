@@ -5,6 +5,15 @@ import MaterialButton from '../../components/UI/MaterialButton/MaterialButton'
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 
 class IntrinsifyContainer extends Component {
+    state = {
+        tickers: ''
+    }
+
+    onTickerTextInputChange = (event) => {
+        const updatedTickers = event.target.value;
+        this.setState({ tickers: updatedTickers });
+    }
+
     render() {
         return (
             <>
@@ -20,7 +29,8 @@ class IntrinsifyContainer extends Component {
                     variant='contained'
                     color='primary'
                     text='Calculate' />
-                <IntrinsifyTable />
+                <IntrinsifyTable
+                    dummyData />
             </>
         );
     }

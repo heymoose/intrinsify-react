@@ -4,15 +4,21 @@ import ReactTable from 'react-table';
 import reactTableStyle from 'react-table/react-table.css'
 import style from './IntrinsifyTable.module.css';
 
-const intrinsifyTable = () => {
-    const data = generateDummyStockData(25);
+const intrinsifyTable = (props) => {
+    const data = props.dummyData === true
+        ? generateDummyStockData(25)
+        : generateDummyStockData(1);
+        
     const columns = generateColumns();
 
     return (
-        <ReactTable
-            className={[reactTableStyle.ReactTable, style.IntrinsifyTable].join(' ')}
-            data={data}
-            columns={columns} />
+        <>
+            <p style={{marginTop: '20px'}}>{ props.dummyData === true ? 'Showing dummy data' : null }</p>
+            <ReactTable
+                className={[reactTableStyle.ReactTable, style.IntrinsifyTable].join(' ')}
+                data={data}
+                columns={columns} />
+        </>
     );
 }
 
