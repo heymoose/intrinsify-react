@@ -40,6 +40,10 @@ class IntrinsifyContainer extends Component {
                     });
 
                 this.setState({stockData: updatedStockData});
+            })
+            .catch(error => {
+                // For the purpose of the experiment I'll just log the error instead of handling it a better way
+                console.log(error);
             });
     }
 
