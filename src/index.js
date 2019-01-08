@@ -3,6 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://api.iextrading.com/1.0/';
+
+axios.interceptors.request.use(request => {
+    return request;
+}, error => {
+    console.log(error);
+    return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    console.log(error);
+    return Promise.reject(error);
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

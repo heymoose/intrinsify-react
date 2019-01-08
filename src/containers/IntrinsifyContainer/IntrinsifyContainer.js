@@ -24,10 +24,7 @@ class IntrinsifyContainer extends Component {
     }
 
     submitHandler = () => {
-        const baseEndpoint = 'https://api.iextrading.com/1.0/';
-        const query = `/stock/market/batch?symbols=${this.state.tickers.join(",")}&types=quote,stats`;
-
-        axios.get(baseEndpoint + query)
+        axios.get(`/stock/market/batch?symbols=${this.state.tickers.join(",")}&types=quote,stats`)
             .then(response => {
                 const updatedStockData = Object.keys(response.data)
                     .map(tick => {
