@@ -6,7 +6,6 @@ class SwitchMap extends Map {
     }
 
     switch = (key) => {
-        debugger;
         return this.has(key)
             ? this.get(key)
             : this.default;
