@@ -1,35 +1,13 @@
 import React from 'react';
 import { findColorRatioBetweenTwoColors } from '../../jsUtils/colorUtils';
 import { randIntegerInRange, randFloatInRange, scale } from '../../jsUtils/numberUtils';
+import * as constants from './constants';
 
 const flatGrowthEstimate = 5;
 const aaaCorpBondYield = 3.56;
 
-const dummyStockNames = {
-    'mmm': '3M Co',
-    'ge': 'General Electric Company',
-    'ko': 'The Coca Cola Co',
-    'hsy': 'Hershey Co',
-    'mcd': 'McDonalds Corp',
-    'pep': 'PepsiCo, Inc.',
-    'dis': 'Walt Disney Co',
-    'de': 'Deere & Company'
-};
-
-const columnsAccessorToName = {
-    'name': 'Name',
-    'ticker': 'Ticker',
-    'price': 'Price',
-    'flatGrowthEstimate': 'Flat Growth Estimate',
-    'aaaCorpBondYield': 'AAA Corporate Bond Yield',
-    'eps': 'EPS',
-    'iv': 'IV',
-    'riv': 'RIV',
-    'rivIndicator': 'Attractiveness'
-};
-
 const createDummyData = (num) => {
-    const tickerKeys = Object.keys(dummyStockNames);
+    const tickerKeys = Object.keys(constants.DUMMY_STOCK_NAMES);
     let randKey;
     
     return new Array(num)
@@ -42,7 +20,7 @@ const createDummyData = (num) => {
             const riv = randFloatInRange(0, 2, 2);
 
             return {
-                'name': dummyStockNames[randKey],
+                'name': constants.DUMMY_STOCK_NAMES[randKey],
                 'ticker': randKey.toUpperCase(),
                 'price': price,
                 'flatGrowthEstimate': flatGrowthEstimate,
@@ -55,28 +33,30 @@ const createDummyData = (num) => {
         });
 }
 
-const mapIndicatorValue = (value) => {
-    const greenLowerBound = 'ccffe5';
-    const greenUpperBound = '00994c';
-    const redLowerBound = 'ffcccc';
-    const redUpperBound = '990000';
+export const mapIndicatorValue = (value) => {
     const constrainedValue = Math.min(Math.max(parseFloat(value), 0), 3); // lock value between 0 and 3
     let percentBetweenMinAndMax = 0;
-    let hex = 'd3d3d3';
+    let hex = constants.RIV_INDICATOR_DEFAULT_COLOR;
 
     if (constrainedValue >= 0 && constrainedValue <= 1) {
         percentBetweenMinAndMax = constrainedValue;
-        hex = findColorRatioBetweenTwoColors(redLowerBound, redUpperBound, percentBetweenMinAndMax);
+        hex = findColorRatioBetweenTwoColors(
+            constants.RIV_INDICATOR_RED_LOWER_BOUND, 
+            constants.RIV_INDICATOR_RED_UPPER_BOUND, 
+            percentBetweenMinAndMax);
     }
     else if (constrainedValue > 1 && constrainedValue <= 3.0) {
-        percentBetweenMinAndMax = constrainedValue / 3.0;
-        hex = findColorRatioBetweenTwoColors(greenUpperBound, greenLowerBound, percentBetweenMinAndMax);
+        percentBetweenMinAndMax = (constrainedValue - 1.0) / 2.0;
+        hex = findColorRatioBetweenTwoColors(
+            constants.RIV_INDICATOR_GREEN_UPPER_BOUND, 
+            constants.RIV_INDICATOR_GREEN_LOWER_BOUND, 
+            percentBetweenMinAndMax);
     }
 
     return '#' + hex;
 }
 
-const mapIndicatorWidth = (value) => {
+export const mapIndicatorWidth = (value) => {
     const constrainedValue = Math.min(Math.max(parseFloat(value), 0), 3); // lock value between 0 and 3
     let width = 25;
 
@@ -95,11 +75,11 @@ export const generateDummyStockData = (numDummyData) => {
 }
 
 export const generateColumns = () => {
-    return Object.keys(columnsAccessorToName)
+    return Object.keys(constants.COLUMNS_ACCESSOR_TO_NAME_MAP)
         .map(acc => {
             if (acc === 'rivIndicator') {
                 return {
-                    Header: columnsAccessorToName[acc],
+                    Header: constants.COLUMNS_ACCESSOR_TO_NAME_MAP[acc],
                     accessor: acc,
                     Cell: row => (
                         <div
@@ -123,7 +103,7 @@ export const generateColumns = () => {
                 }
             }
             return { 
-                Header: columnsAccessorToName[acc],
+                Header: constants.COLUMNS_ACCESSOR_TO_NAME_MAP[acc],
                 accessor: acc
             };
         });

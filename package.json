@@ -6,12 +6,16 @@
     "@material-ui/core": "^3.8.1",
     "@material-ui/styles": "^3.0.0-alpha.6",
     "axios": "^0.18.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "jest": "^23.6.0",
     "jss": "^10.0.0-alpha.7",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.2",
-    "react-table": "^6.8.6"
+    "react-table": "^6.8.6",
+    "react-test-renderer": "^16.7.0"
   },
   "scripts": {
     "start": "react-scripts start",

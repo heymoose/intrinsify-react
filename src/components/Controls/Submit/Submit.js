@@ -1,7 +1,7 @@
 import React from 'react';
 import MaterialButton from '../../UI/MaterialButton/MaterialButton';
 
-const Submit = (props) => (
+const submit = (props) => (
     <MaterialButton
         variant={props.btnVariant}
         color={props.btnColor}
@@ -9,4 +9,4 @@ const Submit = (props) => (
         click={props.btnClick} />
 );
 
-export default Submit;
+export default submit;

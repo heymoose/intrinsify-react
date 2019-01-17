@@ -11,7 +11,7 @@ const styles = theme => ({
   },
 });
 
-function MaterialButton(props) {
+const materialButton = (props) => {
   return (
     <div>
       <Button variant={props.variant} color={props.color} onClick={props.click}>
@@ -21,4 +21,4 @@ function MaterialButton(props) {
   );
 }
 
-export default withStyles(styles)(MaterialButton);
+export default withStyles(styles)(materialButton);
