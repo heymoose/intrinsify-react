@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Header from '../../components/Header/Header';
 import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTextInput';
 import Submit from '../../components/Controls/Submit/Submit';
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
@@ -47,9 +46,7 @@ class IntrinsifyContainer extends Component {
     render() {
         return (
             <>
-                <Header />
-                <TickerTextInput 
-                    id={'tickerInput'} 
+                <TickerTextInput
                     type={'text'}
                     label='Tickers'
                     value='Tickers'
