@@ -6,8 +6,13 @@ import IntrinsifyTable from './IntrinsifyTable';
 configure({adapter: new Adapter()});
 
 describe('<IntrinsifyTable />', () => {
+    let wrapper;
+
+    beforeEach(() => {
+        wrapper = shallow(<IntrinsifyTable dummyData />);
+    });
+
     it('should show dummy data message if dummyData prop is true', () => {
-        const wrapper = shallow(<IntrinsifyTable dummyData />);
         expect(wrapper.find('p')).toHaveLength(1);
     });
 });

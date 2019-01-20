@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import IntrinsifyTable from '../components/IntrinsifyTable/IntrinsifyTable';
 import Submit from '../components/Controls/Submit/Submit';
