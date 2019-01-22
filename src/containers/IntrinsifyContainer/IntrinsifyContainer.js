@@ -5,6 +5,8 @@ import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTex
 import Submit from '../../components/Controls/Submit/Submit';
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 import * as actions from '../../store/actions/index';
+import MaterialButton from '../../components/UI/MaterialButton/MaterialButton';
+import style from './IntrinsifyContainer.module.css';
 
 // Data provided for free by IEX
 // See terms of use here: https://iextrading.com/api-exhibit-a/
@@ -53,6 +55,8 @@ class IntrinsifyContainer extends Component {
     };
 
     render() {
+        const buttonStyles = [style.IntrinsifyButton].join(' ');
+
         return (
             <>
                 <TickerTextInput
@@ -63,12 +67,21 @@ class IntrinsifyContainer extends Component {
                     locked={false}
                     change={this.onTickerTextInputChange}
                 />
-                <Submit
-                    btnVariant='contained'
-                    btnColor='primary'
-                    btnText='Calculate'
-                    btnClick={this.submitHandler}
-                />
+                <div>
+                    <MaterialButton
+                        variant='contained'
+                        color='primary'
+                        text='Calculate'
+                        click={this.submitHandler}
+                        classes={buttonStyles}
+                    />
+                    <MaterialButton
+                        variant='contained'
+                        text='Save'
+                        click={this.submitHandler}
+                        classes={buttonStyles}
+                    />
+                </div>
                 <IntrinsifyTable stockData={this.state.stockData} />
             </>
         );
