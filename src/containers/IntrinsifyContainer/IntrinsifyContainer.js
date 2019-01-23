@@ -15,18 +15,6 @@ class IntrinsifyContainer extends Component {
         stockData: []
     };
 
-    onTickerTextInputChange = event => {
-        const updatedTickers = event.target.value
-            .trim()
-            .split(',')
-            .filter(Boolean);
-
-        this.props.onSetCurrentConfig({
-            ...this.props.currentConfig,
-            tickers: updatedTickers
-        });
-    };
-
     submitHandler = () => {
         const tickers = this.props.currentConfig.tickers.join(',');
         const query = `/stock/market/batch?symbols=${tickers}&types=quote,stats`;
@@ -64,7 +52,15 @@ class IntrinsifyContainer extends Component {
                     value='Tickers'
                     focussed={true}
                     locked={false}
-                    change={this.onTickerTextInputChange}
+                    change={event =>
+                        this.props.onSetCurrentConfig({
+                            ...this.props.currentConfig,
+                            tickers: event.target.value
+                                .trim()
+                                .split(',')
+                                .filter(Boolean)
+                        })
+                    }
                 />
                 <div>
                     <MaterialButton
