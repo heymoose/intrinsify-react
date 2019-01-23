@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTextInput';
-import Submit from '../../components/Controls/Submit/Submit';
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 import * as actions from '../../store/actions/index';
 import MaterialButton from '../../components/UI/MaterialButton/MaterialButton';
