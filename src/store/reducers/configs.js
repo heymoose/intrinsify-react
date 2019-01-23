@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../jsUtils/immutableUpdate';
 
-const initialState = {
+export const initialState = {
     savedConfigs: [],
     currentConfig: {
         id: '',
@@ -9,7 +9,7 @@ const initialState = {
     }
 };
 
-const setCurrentIntrinsifyConfig = (state, action) => {
+export const setCurrentIntrinsifyConfig = (state, action) => {
     return updateObject(state, {
         currentConfig: action.config
     });
