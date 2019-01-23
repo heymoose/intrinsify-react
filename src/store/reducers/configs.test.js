@@ -1,6 +1,5 @@
-import reducer, { initialState, setCurrentIntrinsifyConfig } from './configs';
+import reducer, { initialState } from './configs';
 import * as actionTypes from '../actions/actionTypes';
-import cuid from 'cuid';
 
 describe('configs reducer', () => {
     it('should return the initial state', () => {
