@@ -15,6 +15,10 @@ class IntrinsifyContainer extends Component {
         stockData: []
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.stockData !== nextState.stockData;
+    }
+
     submitHandler = () => {
         const tickers = this.props.currentConfig.tickers.join(',');
         const query = `/stock/market/batch?symbols=${tickers}&types=quote,stats`;
@@ -22,16 +26,14 @@ class IntrinsifyContainer extends Component {
         axios
             .get(query)
             .then(response => {
-                const updatedStockData = Object.keys(response.data).map(
-                    tick => {
-                        return {
-                            ticker: tick,
-                            price: response.data[tick].quote.latestPrice,
-                            eps: response.data[tick].stats.latestEPS,
-                            name: response.data[tick].stats.companyName
-                        };
-                    }
-                );
+                const updatedStockData = Object.keys(response.data).map(tick => {
+                    return {
+                        ticker: tick,
+                        price: response.data[tick].quote.latestPrice,
+                        eps: response.data[tick].stats.latestEPS,
+                        name: response.data[tick].stats.companyName
+                    };
+                });
 
                 this.setState({ stockData: updatedStockData });
             })
@@ -68,13 +70,11 @@ class IntrinsifyContainer extends Component {
                         color='primary'
                         text='Calculate'
                         click={this.submitHandler}
-                        classes={buttonStyles}
                     />
                     <MaterialButton
                         variant='contained'
                         text='Save'
-                        click={this.submitHandler}
-                        classes={buttonStyles}
+                        click={() => this.props.onSaveConfig(this.props.currentConfig)}
                     />
                 </div>
                 <IntrinsifyTable stockData={this.state.stockData} />
@@ -91,8 +91,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSetCurrentConfig: config =>
-            dispatch(actions.setCurrentIntrinsifyConfig(config))
+        onSetCurrentConfig: config => dispatch(actions.setCurrentIntrinsifyConfig(config)),
+        onSaveConfig: config => dispatch(actions.saveIntrinsifyConfig(config))
     };
 };
 

@@ -14,11 +14,7 @@ const styles = theme => ({
 const materialButton = props => {
     return (
         <>
-            <Button
-                variant={props.variant}
-                color={props.color}
-                onClick={props.click}
-                className={props.classes}>
+            <Button variant={props.variant} color={props.color} onClick={props.click}>
                 {props.text}
             </Button>
         </>
