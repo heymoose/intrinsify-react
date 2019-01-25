@@ -5,6 +5,7 @@ import TickerTextInput from '../../components/Controls/TickerTextInput/TickerTex
 import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 import * as actions from '../../store/actions/index';
 import MaterialButton from '../../components/UI/MaterialButton/MaterialButton';
+import IntrinsifyConfigs from '../../components/IntrinsifyConfigs/IntrinsifyConfigs';
 import style from './IntrinsifyContainer.module.css';
 
 // Data provided for free by IEX
@@ -77,6 +78,7 @@ class IntrinsifyContainer extends Component {
                         click={() => this.props.onSaveConfig(this.props.currentConfig)}
                     />
                 </div>
+                <IntrinsifyConfigs />
                 <IntrinsifyTable stockData={this.state.stockData} />
             </>
         );
