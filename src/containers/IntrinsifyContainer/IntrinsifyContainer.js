@@ -6,7 +6,6 @@ import IntrinsifyTable from '../../components/IntrinsifyTable/IntrinsifyTable';
 import * as actions from '../../store/actions/index';
 import MaterialButton from '../../components/UI/MaterialButton/MaterialButton';
 import IntrinsifyConfigs from '../../components/IntrinsifyConfigs/IntrinsifyConfigs';
-import style from './IntrinsifyContainer.module.css';
 
 // Data provided for free by IEX
 // See terms of use here: https://iextrading.com/api-exhibit-a/
@@ -45,8 +44,6 @@ class IntrinsifyContainer extends Component {
     };
 
     render() {
-        const buttonStyles = [style.IntrinsifyButton].join(' ');
-
         return (
             <>
                 <TickerTextInput

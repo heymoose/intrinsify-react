@@ -17,8 +17,8 @@ describe('<IntrinsifyConfig />', () => {
         expect(wrapper.find('div')).toHaveLength(1);
     });
 
-    it('should render a <p> element', () => {
-        expect(wrapper.find('p')).toHaveLength(1);
+    it('should render a <span> element', () => {
+        expect(wrapper.find('span')).toHaveLength(1);
     });
 
     it('should render a TickerList element', () => {

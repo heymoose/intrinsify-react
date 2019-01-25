@@ -12,8 +12,8 @@ describe('<TickerList />', () => {
         wrapper = shallow(<TickerList />);
     });
 
-    it('should render a <p> element', () => {
-        expect(wrapper.find('p')).toHaveLength(1);
+    it('should render a <span> element', () => {
+        expect(wrapper.find('span')).toHaveLength(1);
     });
 
     it('should dynamically render ticker list input from props', () => {
